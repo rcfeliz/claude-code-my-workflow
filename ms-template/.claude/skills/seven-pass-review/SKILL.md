@@ -38,7 +38,7 @@ Each lens runs as a **forked subagent** (context: fork) so the main conversation
 
 1. Resolve manuscript path.
 2. Decide if `.pdf` → extract text first (`pdftotext -layout`).
-3. Create output dir: `quality_reports/seven_pass_[stem]/`.
+3. Create output dir: `inst/quality_reports/seven_pass_[stem]/`.
 
 ### Phase 1: Spawn 7 reviewers in parallel
 
@@ -46,7 +46,7 @@ In a single message, spawn 7 Task tool calls (one per lens). Each subagent gets:
 
 - The manuscript path (to re-read with its own context).
 - The lens-specific prompt (below).
-- Instructions to write to `quality_reports/seven_pass_[stem]/lens_[N]_[lens-name].md`.
+- Instructions to write to `inst/quality_reports/seven_pass_[stem]/lens_[N]_[lens-name].md`.
 - Severity tagging: CRITICAL / MAJOR / MINOR.
 
 Lens prompt rubrics are embedded inline below — one summary paragraph per lens. Each forked subagent receives its lens's rubric plus the manuscript path.
@@ -65,7 +65,7 @@ Lens prompt rubrics are embedded inline below — one summary paragraph per lens
 
 Wait for all 7 lens reports. Then read them and produce:
 
-`quality_reports/seven_pass_[stem]/_SYNTHESIS.md`
+`inst/quality_reports/seven_pass_[stem]/_SYNTHESIS.md`
 
 ```markdown
 # Seven-Pass Review: [Manuscript]

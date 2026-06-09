@@ -77,7 +77,7 @@ You review the **package layer**. You do **not** re-audit general R numerical/st
 
 ## Report Format
 
-Save report to `quality_reports/[package_name]_package_review.md`:
+Save report to `inst/quality_reports/[package_name]_package_review.md`:
 
 ```markdown
 # R Package Review: [package_name]

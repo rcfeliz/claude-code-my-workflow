@@ -36,7 +36,7 @@ Conduct a structured literature search and synthesis on the given topic.
 
 5. **Extract citations** in BibTeX format for all papers discussed.
 
-6. **Save the report** to `quality_reports/lit_review_[sanitized_topic].md`
+6. **Save the report** to `inst/quality_reports/lit_review_[sanitized_topic].md`
 
 ---
 

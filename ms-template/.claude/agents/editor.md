@@ -58,7 +58,7 @@ Reject at desk if ANY of:
 
 ### Desk-review output
 
-Write to `quality_reports/peer_review_[sanitized_paper_name]/desk_review.md`:
+Write to `inst/quality_reports/peer_review_[sanitized_paper_name]/desk_review.md`:
 
 ```markdown
 # Desk Review: [Paper Title]
@@ -164,7 +164,7 @@ Surface disagreements explicitly. Two patterns to watch:
 
 ### Editorial decision output
 
-Write to `quality_reports/peer_review_[paper]/editorial_decision.md`:
+Write to `inst/quality_reports/peer_review_[paper]/editorial_decision.md`:
 
 ```markdown
 # Editorial Decision: [Paper Title]

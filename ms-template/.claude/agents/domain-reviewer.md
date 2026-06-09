@@ -143,7 +143,7 @@ Check the target lecture against the knowledge base:
 
 ## Report Format
 
-Save report to `quality_reports/[FILENAME_WITHOUT_EXT]_substance_review.md`:
+Save report to `inst/quality_reports/[FILENAME_WITHOUT_EXT]_substance_review.md`:
 
 ```markdown
 # Substance Review: [Filename]

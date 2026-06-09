@@ -126,7 +126,7 @@ Do **not** auto-promote — even on 5-of-5 YES votes. The user's approval is the
 
 - Per-entry council report (verdicts, rationales, recommendations) — to the conversation.
 - On approval: MEMORY.md updated (append at appropriate `[LEARN:category]` section), personal-memory.md updated (entry marked promoted).
-- A `quality_reports/memory_promotion_<date>.md` audit file recording the full council session for forensics.
+- A `inst/quality_reports/memory_promotion_<date>.md` audit file recording the full council session for forensics.
 
 ## Anti-patterns
 

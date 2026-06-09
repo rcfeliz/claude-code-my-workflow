@@ -79,9 +79,9 @@ Variance mode runs N independent referees (default N=3, max N=5 for token-cost d
 
 **Output files:**
 
-- `quality_reports/peer_review_<paper>/referee_1.md` … `referee_N.md` (per-referee reports)
-- `quality_reports/peer_review_<paper>/decision_distribution.md` (aggregate table + concern-frequency analysis)
-- `quality_reports/peer_review_<paper>/editor_synthesis.md` (final editorial letter)
+- `inst/quality_reports/peer_review_<paper>/referee_1.md` … `referee_N.md` (per-referee reports)
+- `inst/quality_reports/peer_review_<paper>/decision_distribution.md` (aggregate table + concern-frequency analysis)
+- `inst/quality_reports/peer_review_<paper>/editor_synthesis.md` (final editorial letter)
 
 **Cost discipline.** Variance mode multiplies referee-tier cost by N relative to default `--peer` (which runs 2 referees). The Cost-Conscious Composition section of the workflow guide recommends keeping referees on Sonnet (mid-tier) for variance runs and reserving Opus for the editor synthesis. Hard cap at N=5; for higher variance estimates, run `--variance 5` twice and combine offline.
 
@@ -111,11 +111,11 @@ Variance mode runs N independent referees (default N=3, max N=5 for token-cost d
 
 5. **Produce the review report.**
 
-6. **Save to** `quality_reports/paper_review_[sanitized_name]_round[N].md` (N=1 in default mode; N increments in adversarial mode).
+6. **Save to** `inst/quality_reports/paper_review_[sanitized_name]_round[N].md` (N=1 in default mode; N increments in adversarial mode).
 
 6b. **Cross-artifact integration.** Unless `$ARGUMENTS` contains `--no-cross-artifact`, and if the manuscript references analysis scripts (detected via `\input{scripts/...}`, `%% source:` comments, or matching `scripts/R/_outputs/` filenames), auto-invoke:
-   - `/review-r` on each referenced script (forked subagent, results to `quality_reports/cross_artifact_[paper]/review_r_*.md`)
-   - `/audit-reproducibility` on the manuscript + outputs dir (results to `quality_reports/cross_artifact_[paper]/reproducibility.md`)
+   - `/review-r` on each referenced script (forked subagent, results to `inst/quality_reports/cross_artifact_[paper]/review_r_*.md`)
+   - `/audit-reproducibility` on the manuscript + outputs dir (results to `inst/quality_reports/cross_artifact_[paper]/reproducibility.md`)
 
    Merge critical cross-artifact findings (code bug invalidates paper claim, reproducibility FAIL) into a new "Cross-Artifact Findings" section at the top of the paper review report. See [`.claude/rules/cross-artifact-review.md`](../../rules/cross-artifact-review.md) for the full protocol.
 
@@ -305,7 +305,7 @@ Phase 3: Re-audit
 
 ### Final report
 
-After the loop ends, write `quality_reports/paper_review_[sanitized_name]_FINAL.md`:
+After the loop ends, write `inst/quality_reports/paper_review_[sanitized_name]_FINAL.md`:
 
 ```markdown
 # Final Review: [Paper Title]
@@ -346,7 +346,7 @@ After the loop ends, write `quality_reports/paper_review_[sanitized_name]_FINAL.
 
 Unless `--no-cross-artifact` is set, auto-invoke `/audit-reproducibility` on the manuscript + its outputs directory *first*. Any reproducibility FAIL becomes desk-reject-worthy evidence the editor can cite. See `.claude/rules/cross-artifact-review.md`.
 
-Reports: `quality_reports/cross_artifact_[paper]/reproducibility.md`.
+Reports: `inst/quality_reports/cross_artifact_[paper]/reproducibility.md`.
 
 **Novelty-probe Post-Flight (new in v1.7.0).** The editor's novelty probe uses `WebSearch` to check whether the paper's contribution has been made before. WebSearch results can be hallucinated — fabricated prior work, misattributed findings, wrong years. Before the editor's desk review incorporates novelty-probe claims into its decision, those claims must pass Post-Flight Verification per [`.claude/rules/post-flight-verification.md`](../../rules/post-flight-verification.md):
 
@@ -379,7 +379,7 @@ Spawn forked subagent `editor` with the manuscript path and `--peer <JOURNAL>` c
 - Runs novelty probes (unless `--no-novelty-check`).
 - Either **DESK REJECT** (pipeline terminates with rejection letter) or **SEND OUT**.
 
-Report: `quality_reports/peer_review_[paper]/desk_review.md`.
+Report: `inst/quality_reports/peer_review_[paper]/desk_review.md`.
 
 ### Phase 1b: Referee selection (inside editor)
 
@@ -397,7 +397,7 @@ Each referee must include "What would change my mind: [specific ask]" on every M
 
 Read both referee reports. Classify each MAJOR concern as FATAL / ADDRESSABLE / TASTE. Produce editorial decision using the decision rule table in `editor.md`.
 
-Report: `quality_reports/peer_review_[paper]/editorial_decision.md`.
+Report: `inst/quality_reports/peer_review_[paper]/editorial_decision.md`.
 
 ### Phase 4: Summary
 
@@ -411,7 +411,7 @@ Tell the user:
 ## Output layout for `--peer` mode
 
 ```
-quality_reports/
+inst/quality_reports/
   peer_review_[sanitized_paper_name]/
     desk_review.md                       # Phase 1 + Phase 1b
     referee_domain.md                    # Phase 2 (parallel)

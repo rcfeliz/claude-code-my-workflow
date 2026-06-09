@@ -55,7 +55,7 @@ Output the formatted prompt **in a fenced code block** so the user can copy it c
 
 ### Step 4 (optional): Save
 
-If `--save <path>` was supplied, write the formatted prompt to that path. If the path is a directory, default the filename to `quality_reports/prompts/YYYY-MM-DD_<slug>.md`. The slug is derived from the first ~8 words of the Task section.
+If `--save <path>` was supplied, write the formatted prompt to that path. If the path is a directory, default the filename to `inst/quality_reports/prompts/YYYY-MM-DD_<slug>.md`. The slug is derived from the first ~8 words of the Task section.
 
 ### Step 5: Return
 

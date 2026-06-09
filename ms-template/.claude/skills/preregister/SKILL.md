@@ -39,7 +39,7 @@ Preregistration is a written commitment to your hypotheses, design, and analysis
 
 Two input modes:
 
-1. **`--input <path>`** — a research spec produced by `/interview-me` (saved under `quality_reports/specs/`) or any structured Markdown file. Read the spec and extract: research question, hypotheses (directional!), data source, design, sample, analysis approach. If the spec already has a `paper_type:` field (e.g., `survey-experiment`), use it to bias the style choice.
+1. **`--input <path>`** — a research spec produced by `/interview-me` (saved under `inst/quality_reports/specs/`) or any structured Markdown file. Read the spec and extract: research question, hypotheses (directional!), data source, design, sample, analysis approach. If the spec already has a `paper_type:` field (e.g., `survey-experiment`), use it to bias the style choice.
 2. **No `--input`** — prompt the user for a 1–3 paragraph description of the study, then proceed. If the description omits a directional hypothesis, ask once. Do not fabricate.
 
 Refusal conditions (must be checked before any drafting):
@@ -107,12 +107,12 @@ Skip post-flight if:
 
 ### PHASE 6 — Output
 
-Write to `quality_reports/preregistrations/YYYY-MM-DD_<slug>.md` (gitignored — preregistration is meant to be timestamped and uploaded externally, not committed alongside code).
+Write to `inst/quality_reports/preregistrations/YYYY-MM-DD_<slug>.md` (gitignored — preregistration is meant to be timestamped and uploaded externally, not committed alongside code).
 
 Print to chat:
 
 ```
-✓ Preregistration draft saved: quality_reports/preregistrations/<file>.md
+✓ Preregistration draft saved: inst/quality_reports/preregistrations/<file>.md
   Style: <osf|aspredicted|aea-rct>
   Sections: <count> total — <complete> complete, <clarify> with [CLARIFY:] placeholders
   Citations verified: <PASS>/<PARTIAL>/<FAIL>  (or "no citations to verify")
@@ -133,16 +133,16 @@ Include the registry URL: OSF → `osf.io/registries`, AsPredicted → `aspredic
 ## Examples
 
 ### Example 1 — Poli-sci survey experiment from a spec
-**User says:** "Preregister this study" (with `--input quality_reports/specs/2026-04-15_priming-effects.md`)
+**User says:** "Preregister this study" (with `--input inst/quality_reports/specs/2026-04-15_priming-effects.md`)
 **Actions:**
 1. Read spec; `paper_type: survey-experiment` → default style `osf`.
 2. Extract 2 directional hypotheses, MTurk N=1,200, OLS with treatment dummies.
 3. Generate OSF document, all MUST sections filled, 1 MAY left blank.
 4. No prior-lit citations beyond the spec — skip post-flight.
-**Result:** Saved to `quality_reports/preregistrations/2026-04-15_priming-effects.md`. User uploads to OSF.
+**Result:** Saved to `inst/quality_reports/preregistrations/2026-04-15_priming-effects.md`. User uploads to OSF.
 
 ### Example 2 — Econ field experiment, AEA RCT Registry
-**User says:** "Draft an AEA RCT preregistration for the cash-transfer pilot" (with `--style aea-rct --input quality_reports/specs/2026-03-10_ct-pilot.md`)
+**User says:** "Draft an AEA RCT preregistration for the cash-transfer pilot" (with `--style aea-rct --input inst/quality_reports/specs/2026-03-10_ct-pilot.md`)
 **Actions:**
 1. Read spec; randomization unit = village, primary outcome = consumption.
 2. Generate AEA RCT fields. IRB number missing in spec → `[CLARIFY: IRB approval number]`.
@@ -167,4 +167,4 @@ Include the registry URL: OSF → `osf.io/registries`, AsPredicted → `aspredic
 
 **Different registries asking for different things** — use the registry's own template if this skill's mapping is too coarse. The three styles cover ~90% of social-science preregistrations; edge cases (PROSPERO, ClinicalTrials.gov, ISRCTN) need the registry's native form.
 
-**Output dir doesn't exist** — `quality_reports/preregistrations/.gitkeep` should exist on a fresh fork; if missing, the skill will create the directory before writing.
+**Output dir doesn't exist** — `inst/quality_reports/preregistrations/.gitkeep` should exist on a fresh fork; if missing, the skill will create the directory before writing.

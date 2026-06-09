@@ -2,7 +2,6 @@
 
 **Artigo:** [TÍTULO DO ARTIGO]
 **Autor:** Ricardo Feliz Okamoto — FD USP
-**RQ principal:** [PERGUNTA DE PESQUISA PRINCIPAL]
 **Branch:** main
 
 ---
@@ -20,9 +19,10 @@ msNome/
 ├── R/                         # Funções do pacote
 ├── data/                      # Dados processados (usethis::use_data())
 ├── data-raw/                  # Scripts de processamento dos dados brutos
+├── inst/
+│   ├── artigo/                # Manuscrito em Quarto (.qmd)
+│   └── quality_reports/       # Plans, session logs
 ├── man/                       # Documentação (gerada por roxygen2)
-├── paper/                     # Manuscrito em Quarto (.qmd)
-├── quality_reports/           # Plans, session logs
 └── tests/                     # Testes do pacote
 ```
 
@@ -30,7 +30,7 @@ msNome/
 
 ## Core Principles
 
-- **Plan first** -- enter plan mode before non-trivial tasks; save plans to `quality_reports/plans/`
+- **Plan first** -- enter plan mode before non-trivial tasks; save plans to `inst/quality_reports/plans/`
 - **Verify after** -- render e confirmar output ao final de cada tarefa
 - **Quality gates** -- nothing ships below 80/100
 - **[LEARN] tags** -- when corrected, save `[LEARN:category] wrong → right` to MEMORY.md
@@ -48,9 +48,9 @@ msNome/
 
 ## Manuscrito
 
-- Arquivo principal: `paper/msNome.qmd`
-- Referências: `paper/references.bib`
-- Tabelas e figuras geradas pelos scripts R são salvas em `paper/outputs/`
+- Arquivo principal: `inst/artigo/msNome.qmd`
+- Referências: `inst/artigo/references.bib`
+- Tabelas e figuras geradas pelos scripts R são salvas em `inst/artigo/outputs/`
 
 ---
 

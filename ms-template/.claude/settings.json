@@ -9,5 +9,5 @@
     ],
     "deny": []
   },
-  "plansDirectory": "quality_reports/plans"
+  "plansDirectory": "inst/quality_reports/plans"
 }

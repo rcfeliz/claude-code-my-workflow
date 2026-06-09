@@ -56,7 +56,7 @@ Record each claim as a tuple:
 }
 ```
 
-Write the extracted claims to `quality_reports/reproducibility_claims_[manuscript-name].json` so the user can review the extraction before audit.
+Write the extracted claims to `inst/quality_reports/reproducibility_claims_[manuscript-name].json` so the user can review the extraction before audit.
 
 ### Phase 2: Extract results from outputs
 
@@ -106,7 +106,7 @@ Respect any **tolerance overrides** the user has written into their `replication
 
 ### Phase 5: Report
 
-Write `quality_reports/reproducibility_audit_[manuscript-name].md`:
+Write `inst/quality_reports/reproducibility_audit_[manuscript-name].md`:
 
 ```markdown
 # Reproducibility Audit: [Manuscript Title]
@@ -171,7 +171,7 @@ The skill compares manuscript claims against outputs in three source-language ec
 
 ## Passport-mode (v1.9.0)
 
-When `quality_reports/passports/<paper-slug>.yaml` exists, the skill operates in **passport mode**: instead of emitting a one-shot report, it **reads, updates, and rewrites** the passport file in place.
+When `inst/quality_reports/passports/<paper-slug>.yaml` exists, the skill operates in **passport mode**: instead of emitting a one-shot report, it **reads, updates, and rewrites** the passport file in place.
 
 - For each `claims:` entry in the passport, perform the same numeric audit as the default mode (extract reported value from manuscript at `location`, locate computed value at `source_file:source_line` / `output_file:output_field`, compare against `tolerance:`).
 - After each claim is audited, update `status` in place:

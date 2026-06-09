@@ -29,9 +29,9 @@ Run the mandatory proofreading protocol on lecture files. This produces a report
    - Proposed fix (what it should be)
    - Category and severity
 
-4. **Save each report** to `quality_reports/`:
-   - For `.tex` files: `quality_reports/FILENAME_report.md`
-   - For `.qmd` files: `quality_reports/FILENAME_qmd_report.md`
+4. **Save each report** to `inst/quality_reports/`:
+   - For `.tex` files: `inst/quality_reports/FILENAME_report.md`
+   - For `.qmd` files: `inst/quality_reports/FILENAME_qmd_report.md`
 
 5. **IMPORTANT: Do NOT edit any source files.**
    Only produce the report. Fixes are applied separately after user review.

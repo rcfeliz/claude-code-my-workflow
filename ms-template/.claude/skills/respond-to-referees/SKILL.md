@@ -132,7 +132,7 @@ If everything is covered, the final message should say `All concerns addressed o
 
 - For first-pass manuscript review **before** receiving referee comments, use `/review-paper`.
 - For substantive content audits during revision, use `/slide-excellence` (works on `.tex` manuscripts via the domain-reviewer agent).
-- Save the response to `quality_reports/` if you want a permanent record alongside other quality reports.
+- Save the response to `inst/quality_reports/` if you want a permanent record alongside other quality reports.
 
 ## Verification
 

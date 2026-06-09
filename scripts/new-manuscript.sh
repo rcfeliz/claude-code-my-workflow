@@ -35,17 +35,10 @@ while [[ -z "$TITULO" ]]; do
   read -rp "Título do artigo: " TITULO
 done
 
-read -rp "Pergunta de pesquisa principal: " RQ
-while [[ -z "$RQ" ]]; do
-  echo -e "${RED}RQ não pode ser vazia.${NC}"
-  read -rp "Pergunta de pesquisa principal: " RQ
-done
-
 echo ""
 echo -e "${BOLD}Resumo:${NC}"
 echo -e "  Repositório : ${GREEN}$MS_NOME${NC}"
 echo -e "  Título      : $TITULO"
-echo -e "  RQ          : $RQ"
 echo -e "  Pasta       : $REPO_DIR"
 echo ""
 read -rp "Confirmar? [s/N] " CONFIRM
@@ -66,13 +59,11 @@ cp "$INFRA_DIR/ms-template/CLAUDE.md" "$REPO_DIR/"
 # ── 4. substituir placeholders ─────────────────────────────────────────────
 echo -e "${YELLOW}Preenchendo CLAUDE.md...${NC}"
 TITULO_ESC=$(printf '%s\n' "$TITULO" | sed 's/[[\.*^$()+?{|]/\\&/g')
-RQ_ESC=$(printf '%s\n' "$RQ" | sed 's/[[\.*^$()+?{|]/\\&/g')
 MS_ESC=$(printf '%s\n' "$MS_NOME" | sed 's/[[\.*^$()+?{|]/\\&/g')
 
 sed -i \
   -e "s/\[MS_NOME\]/$MS_ESC/g" \
   -e "s/\[TÍTULO DO ARTIGO\]/$TITULO_ESC/g" \
-  -e "s/\[PERGUNTA DE PESQUISA PRINCIPAL\]/$RQ_ESC/g" \
   -e "s/msNome/$MS_ESC/g" \
   "$REPO_DIR/CLAUDE.md"
 
@@ -93,7 +84,7 @@ else
 fi
 
 # ── 7. criar pastas padrão do artigo ───────────────────────────────────────
-mkdir -p "$REPO_DIR/data-raw" "$REPO_DIR/paper" "$REPO_DIR/quality_reports/plans"
+mkdir -p "$REPO_DIR/data-raw" "$REPO_DIR/inst/artigo" "$REPO_DIR/inst/quality_reports/plans"
 echo "# dados brutos — processar aqui e salvar em data/ via usethis::use_data()" \
   > "$REPO_DIR/data-raw/README.md"
 git -C "$REPO_DIR" add .
@@ -101,4 +92,5 @@ git -C "$REPO_DIR" commit -m "chore: pastas padrão do artigo"
 git -C "$REPO_DIR" push 2>/dev/null || true
 
 echo -e "\n${GREEN}${BOLD}Pronto! $MS_NOME criado em $REPO_DIR${NC}"
-echo -e "Abra com: ${BOLD}cd $REPO_DIR && claude${NC}"
+echo -e "Iniciando entrevista de pesquisa...\n"
+cd "$REPO_DIR" && claude "/interview-me $TITULO"

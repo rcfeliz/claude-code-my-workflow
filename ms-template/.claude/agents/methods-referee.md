@@ -149,7 +149,7 @@ Same discipline as domain-referee: if you can't articulate the fix, it's taste, 
 
 ## Report format
 
-Write to `quality_reports/peer_review_[paper]/referee_methods.md`:
+Write to `inst/quality_reports/peer_review_[paper]/referee_methods.md`:
 
 ```markdown
 # Methods Referee Report

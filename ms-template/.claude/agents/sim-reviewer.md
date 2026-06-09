@@ -88,7 +88,7 @@ You review the **simulation-specific** layer. You do **not** re-audit general R 
 
 ## Report Format
 
-Save report to `quality_reports/[script_name]_sim_review.md`:
+Save report to `inst/quality_reports/[script_name]_sim_review.md`:
 
 ```markdown
 # Simulation Review: [script_name].R

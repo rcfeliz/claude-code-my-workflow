@@ -26,7 +26,7 @@ Before writing any R code:
 | Main ATT | Table 2, Col 3 | -1.632 | (0.584) | Primary specification |
 ```
 
-- [ ] Store targets in `quality_reports/LectureNN_replication_targets.md` or as RDS
+- [ ] Store targets in `inst/quality_reports/LectureNN_replication_targets.md` or as RDS
 
 ---
 
@@ -68,7 +68,7 @@ Before writing any R code:
 
 ### Replication Report
 
-Save to `quality_reports/LectureNN_replication_report.md`:
+Save to `inst/quality_reports/LectureNN_replication_report.md`:
 
 ```markdown
 # Replication Report: [Paper Author (Year)]
@@ -118,7 +118,7 @@ The skill exits 1 on any tolerance violation, so it integrates cleanly with qual
 
 ## Claims Provenance: `passport.yaml`
 
-A passport is a single per-paper, per-branch YAML file at `quality_reports/passports/<paper-slug>.yaml` that records, for each verified numeric claim in the manuscript, the script invocation and output file that produced it. The contract is intentionally narrow: numeric claims only (point estimates, standard errors, p-values, sample sizes, percentages from tables/figures), not prose claims (which `/verify-claims` handles separately).
+A passport is a single per-paper, per-branch YAML file at `inst/quality_reports/passports/<paper-slug>.yaml` that records, for each verified numeric claim in the manuscript, the script invocation and output file that produced it. The contract is intentionally narrow: numeric claims only (point estimates, standard errors, p-values, sample sizes, percentages from tables/figures), not prose claims (which `/verify-claims` handles separately).
 
 `templates/passport-template.yaml` is the starter file. Forkers should copy it once per paper.
 

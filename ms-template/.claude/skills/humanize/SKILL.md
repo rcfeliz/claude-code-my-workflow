@@ -171,7 +171,7 @@ Long chains of compound modifiers as a paragraph signature:
    line N | category | severity | current text | suggested rewrite or "remove"
    ```
 
-5. **Write report** to `quality_reports/humanize_<filename>_report.md`. Include:
+5. **Write report** to `inst/quality_reports/humanize_<filename>_report.md`. Include:
    - Per-category counts (HIGH / MED / LOW)
    - Per-finding table
    - Summary recommendation (rough thresholds):
@@ -198,6 +198,6 @@ If you find yourself reaching for an auto-rewriter, that's the signal to rewrite
 
 ## Output
 
-- Report at `quality_reports/humanize_<filename>_report.md` (gitignored).
+- Report at `inst/quality_reports/humanize_<filename>_report.md` (gitignored).
 - Summary to the conversation: counts per category, top concentrated paragraphs, action recommendation.
 - **No file edits.** The user reads the report and applies changes manually.

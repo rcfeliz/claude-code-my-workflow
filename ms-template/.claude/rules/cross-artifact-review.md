@@ -50,11 +50,11 @@ Build a list of scripts that produced content in this paper.
 
 ### 2. Auto-invoke `/review-r`
 
-For each identified R script, launch `/review-r` in a forked subagent (`context: fork`). Save reports to `quality_reports/cross_artifact_[paper]/review_r_[script].md`.
+For each identified R script, launch `/review-r` in a forked subagent (`context: fork`). Save reports to `inst/quality_reports/cross_artifact_[paper]/review_r_[script].md`.
 
 ### 3. Auto-invoke `/audit-reproducibility`
 
-Run `/audit-reproducibility $manuscript scripts/R/_outputs/` once. Save to `quality_reports/cross_artifact_[paper]/reproducibility.md`.
+Run `/audit-reproducibility $manuscript scripts/R/_outputs/` once. Save to `inst/quality_reports/cross_artifact_[paper]/reproducibility.md`.
 
 ### 4. Surface cross-artifact findings
 
@@ -63,7 +63,7 @@ In the paper review report, add a new section:
 ```markdown
 ## Cross-Artifact Findings
 
-**Scripts reviewed:** N (see `quality_reports/cross_artifact_[paper]/`)
+**Scripts reviewed:** N (see `inst/quality_reports/cross_artifact_[paper]/`)
 **Reproducibility:** PASS / FAIL — k of m claims within tolerance
 **Code quality (merged from /review-r reports):** C critical, M major, L minor
 

@@ -1,6 +1,6 @@
 ---
 name: checkpoint
-description: Save a structured state snapshot before stopping or handing off. Captures the active plan, recent decisions, file pointers (with line numbers), open questions, and the next 1–3 actions into a checkpoint file under `quality_reports/checkpoints/`. Optionally proposes `[LEARN]` entries to add to MEMORY.md. Use when user says "checkpoint", "save state", "snapshot before I stop", "where am I", "wrap up the session for handoff", or before a long break / model switch / collaborator handoff. Companion to (NOT replacement for) the narrative session-log workflow.
+description: Save a structured state snapshot before stopping or handing off. Captures the active plan, recent decisions, file pointers (with line numbers), open questions, and the next 1–3 actions into a checkpoint file under `inst/quality_reports/checkpoints/`. Optionally proposes `[LEARN]` entries to add to MEMORY.md. Use when user says "checkpoint", "save state", "snapshot before I stop", "where am I", "wrap up the session for handoff", or before a long break / model switch / collaborator handoff. Companion to (NOT replacement for) the narrative session-log workflow.
 author: Claude Code Academic Workflow
 version: 1.0.0
 argument-hint: "[short-topic-slug] [--no-memory]"
@@ -16,7 +16,7 @@ allowed-tools: ["Read", "Write", "Bash"]
 
 # /checkpoint — Structured Session Handoff
 
-Produce a state snapshot that the next session (yours, or a collaborator's, or a fresh-context reboot) can resume from in under a minute. The narrative `quality_reports/session_logs/` continues to live separately — `/checkpoint` writes the *structured* side: facts, file pointers, and next-actions.
+Produce a state snapshot that the next session (yours, or a collaborator's, or a fresh-context reboot) can resume from in under a minute. The narrative `inst/quality_reports/session_logs/` continues to live separately — `/checkpoint` writes the *structured* side: facts, file pointers, and next-actions.
 
 ## When to use
 
@@ -27,9 +27,9 @@ Produce a state snapshot that the next session (yours, or a collaborator's, or a
 
 ## When NOT to use
 
-- For the narrative *what happened* — that lives in `quality_reports/session_logs/` (see `.claude/rules/session-logging.md`).
+- For the narrative *what happened* — that lives in `inst/quality_reports/session_logs/` (see `.claude/rules/session-logging.md`).
 - For commit messages — those go through `/commit`, which writes its own structured commit body.
-- For decisions about alternatives — those go to `templates/decision-record.md` via `quality_reports/decisions/`.
+- For decisions about alternatives — those go to `templates/decision-record.md` via `inst/quality_reports/decisions/`.
 
 The three artifact types are complementary: **session-log = narrative**, **decision-record = trade-off captured**, **checkpoint = state to resume from**.
 
@@ -39,8 +39,8 @@ The three artifact types are complementary: **session-log = narrative**, **decis
 
 Read, in this order:
 
-1. **Most recent plan** — `ls -t quality_reports/plans/*.md | head -1`. Extract: status (DRAFT / APPROVED / COMPLETED), title, top-level files-to-modify list, and any line that begins with "Open questions" / "Risks" / "Next".
-2. **Most recent session log** — `ls -t quality_reports/session_logs/*.md | head -1`. Extract: latest "Next steps" or "Blockers" lines.
+1. **Most recent plan** — `ls -t inst/quality_reports/plans/*.md | head -1`. Extract: status (DRAFT / APPROVED / COMPLETED), title, top-level files-to-modify list, and any line that begins with "Open questions" / "Risks" / "Next".
+2. **Most recent session log** — `ls -t inst/quality_reports/session_logs/*.md | head -1`. Extract: latest "Next steps" or "Blockers" lines.
 3. **MEMORY.md** root — read the table of `[LEARN]` entries already on disk so you don't propose duplicates.
 4. **Git state** — `git log --oneline -20`, `git status -s`, `git branch --show-current`. Capture: current branch, last 5 subjects, uncommitted file count.
 5. **Working files** — `git diff --stat HEAD` to see which files changed in this session (skip if branch is freshly cut; just say "no in-session edits").
@@ -50,7 +50,7 @@ If any of these reads fails (file missing), record "(none on disk)" rather than 
 
 ### PHASE 2 — Write the checkpoint
 
-Write to `quality_reports/checkpoints/YYYY-MM-DD_$ARGUMENTS.md` (slug from `$ARGUMENTS`; if no arg, derive from the active plan's title and warn the user). The file uses this template:
+Write to `inst/quality_reports/checkpoints/YYYY-MM-DD_$ARGUMENTS.md` (slug from `$ARGUMENTS`; if no arg, derive from the active plan's title and warn the user). The file uses this template:
 
 ```markdown
 ---
@@ -72,7 +72,7 @@ status: in_progress | paused | ready-to-merge
 ## File pointers
 [Concrete `path:line` references to where the next session should resume. Aim for 3–8.]
 - `.claude/skills/checkpoint/SKILL.md:42` — body draft, needs trigger-phrase tightening
-- `quality_reports/plans/[slug].md:135` — verification section to refresh after impl
+- `inst/quality_reports/plans/[slug].md:135` — verification section to refresh after impl
 - `CHANGELOG.md` — Unreleased section, v1.8.0 entry not yet drafted
 
 ## Recent decisions
@@ -88,7 +88,7 @@ status: in_progress | paused | ready-to-merge
 3. [...]
 
 ## Resume prompt
-> Resuming from checkpoint `quality_reports/checkpoints/[filename]`. Read it, then continue with action 1.
+> Resuming from checkpoint `inst/quality_reports/checkpoints/[filename]`. Read it, then continue with action 1.
 ```
 
 Keep the file under ~80 lines. If state is too large for that, the plan file (not the checkpoint) is the right place; checkpoint is a thin index pointing back at the plan.
@@ -114,7 +114,7 @@ Stay below 3 candidates. If you have more, the session was probably under-narrat
 Print, to chat:
 
 ```
-✓ Checkpoint saved: quality_reports/checkpoints/YYYY-MM-DD_<slug>.md
+✓ Checkpoint saved: inst/quality_reports/checkpoints/YYYY-MM-DD_<slug>.md
   Branch: <branch>     Status: <in_progress|paused|ready-to-merge>
   Active plan: <path or none>     Open questions: <count>
   Resume command: claude --continue   (or paste the file's "Resume prompt" into a fresh session)
@@ -134,12 +134,12 @@ If memory candidates were proposed, summarise which (if any) the user accepted.
 ### Example 1 — End-of-day handoff
 **User says:** "checkpoint v180-polisci"
 **Actions:**
-1. Read `quality_reports/plans/2026-04-27_v180-polisci-apr2026.md` (active, DRAFT).
-2. Read `quality_reports/session_logs/2026-04-27_v180-polisci-apr2026.md`.
+1. Read `inst/quality_reports/plans/2026-04-27_v180-polisci-apr2026.md` (active, DRAFT).
+2. Read `inst/quality_reports/session_logs/2026-04-27_v180-polisci-apr2026.md`.
 3. Capture: branch `feat/v1.8.0-polisci-apr2026`, 4 commits ahead of main, 8 files modified.
-4. Write `quality_reports/checkpoints/2026-04-27_v180-polisci.md` with file pointers to the half-drafted `methods-referee.md` and the un-started `journal-profiles.md` poli-sci block.
+4. Write `inst/quality_reports/checkpoints/2026-04-27_v180-polisci.md` with file pointers to the half-drafted `methods-referee.md` and the un-started `journal-profiles.md` poli-sci block.
 5. Propose 1 candidate `[LEARN:scope]` entry on the linear-cost of disciplinary breadth.
-**Result:** Next session: `claude --continue`, then `read quality_reports/checkpoints/2026-04-27_v180-polisci.md and start at action 1`.
+**Result:** Next session: `claude --continue`, then `read inst/quality_reports/checkpoints/2026-04-27_v180-polisci.md and start at action 1`.
 
 ### Example 2 — Mid-plan model switch
 **User says:** "I want to switch to Sonnet for the cheap doc edits — checkpoint first"

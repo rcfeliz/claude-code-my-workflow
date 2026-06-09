@@ -65,7 +65,7 @@ Your disposition shapes *what you notice*, not *whether you're fair*. Don't dist
 
 ## Report format
 
-Write to `quality_reports/peer_review_[paper]/referee_domain.md`:
+Write to `inst/quality_reports/peer_review_[paper]/referee_domain.md`:
 
 ```markdown
 # Domain Referee Report

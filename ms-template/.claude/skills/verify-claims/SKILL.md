@@ -93,7 +93,7 @@ If the draft is writeable and the user asked for auto-correction, regenerate the
 ## Example
 
 ```
-/verify-claims quality_reports/lit-review_staggered-did.md --source master_supporting_docs/callaway_santanna_2021.pdf --source master_supporting_docs/dechaisemartin_dhaultfoeuille_2020.pdf
+/verify-claims inst/quality_reports/lit-review_staggered-did.md --source master_supporting_docs/callaway_santanna_2021.pdf --source master_supporting_docs/dechaisemartin_dhaultfoeuille_2020.pdf
 ```
 
 Expected output (abridged):

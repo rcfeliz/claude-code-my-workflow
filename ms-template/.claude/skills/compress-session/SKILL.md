@@ -1,6 +1,6 @@
 ---
 name: compress-session
-description: Distill the current conversation into a structured note (decisions made, open questions, file pointers with line numbers, next 1–3 actions) and save to `quality_reports/session_logs/` before auto-compression. Differs from `/checkpoint` (explicit stop-point snapshot) and from auto-compaction (which truncates rather than distills). Use when context is approaching auto-compact threshold, when a long pipeline has accumulated many decisions, or when the user says "compress", "distil this session", "before we hit auto-compact", "structured handoff before context resets".
+description: Distill the current conversation into a structured note (decisions made, open questions, file pointers with line numbers, next 1–3 actions) and save to `inst/quality_reports/session_logs/` before auto-compression. Differs from `/checkpoint` (explicit stop-point snapshot) and from auto-compaction (which truncates rather than distills). Use when context is approaching auto-compact threshold, when a long pipeline has accumulated many decisions, or when the user says "compress", "distil this session", "before we hit auto-compact", "structured handoff before context resets".
 author: Claude Code Academic Workflow
 version: 1.0.0
 argument-hint: "[optional-topic-slug]"
@@ -29,11 +29,11 @@ The template's 200-line `MEMORY.md` cap defends against *distraction*. The plan-
 |---|---|---|
 | **When** | Explicit stop-point (end of working session, before model switch, before collaborator handoff) | Forced — context is about to auto-compact, or the conversation has accumulated enough noise that distillation pays for itself |
 | **What's preserved** | Active plan, decisions, file pointers, next 1–3 actions | Same, plus an explicit "discarded as noise" line so the next session knows what was *intentionally* not kept |
-| **Output location** | `quality_reports/checkpoints/YYYY-MM-DD_<slug>.md` | `quality_reports/session_logs/YYYY-MM-DD_compression_<slug>.md` |
+| **Output location** | `inst/quality_reports/checkpoints/YYYY-MM-DD_<slug>.md` | `inst/quality_reports/session_logs/YYYY-MM-DD_compression_<slug>.md` |
 | **Triggering** | User-invoked at a natural pause | User-invoked when context fatigue shows, OR proposed via PreCompact hook |
 | **Memory updates** | Optional auto-proposal of `[LEARN]` entries | Always proposes `[LEARN]` entries — distillation is exactly the moment when generalizable lessons surface |
 
-Both skills are companions to the narrative session-log workflow at `quality_reports/session_logs/`. None replaces the others.
+Both skills are companions to the narrative session-log workflow at `inst/quality_reports/session_logs/`. None replaces the others.
 
 ## When to use
 
@@ -52,7 +52,7 @@ Both skills are companions to the narrative session-log workflow at `quality_rep
 
 ### Step 1: Identify the session
 
-Read the most recent session log under `quality_reports/session_logs/`. If none exists, treat the current conversation as the source.
+Read the most recent session log under `inst/quality_reports/session_logs/`. If none exists, treat the current conversation as the source.
 
 Optionally use `$ARGUMENTS` as a topic slug for the output filename.
 
@@ -69,7 +69,7 @@ Produce a note with these sections:
 
 ## Active state
 
-- **Plan:** [link to active plan in `quality_reports/plans/` or "no active plan"]
+- **Plan:** [link to active plan in `inst/quality_reports/plans/` or "no active plan"]
 - **Branch:** <git branch>
 - **Last commit:** <SHA + subject>
 - **Working tree:** <clean | N modified files>
@@ -111,7 +111,7 @@ Lessons worth promoting to MEMORY.md (or personal-memory.md if machine-specific)
 
 ### Step 3: Save
 
-Write to `quality_reports/session_logs/YYYY-MM-DD_compression_<topic>.md` (slug derived from `$ARGUMENTS` or current plan name).
+Write to `inst/quality_reports/session_logs/YYYY-MM-DD_compression_<topic>.md` (slug derived from `$ARGUMENTS` or current plan name).
 
 ### Step 4: Surface a summary
 
@@ -151,6 +151,6 @@ The hook surfaces a reminder; the user runs `/compress-session` manually. We del
 
 ## Output
 
-- Compression file at `quality_reports/session_logs/YYYY-MM-DD_compression_<topic>.md` (gitignored — session-state, not version-controlled).
+- Compression file at `inst/quality_reports/session_logs/YYYY-MM-DD_compression_<topic>.md` (gitignored — session-state, not version-controlled).
 - Summary in the conversation: counts + HIGH-impact `[LEARN]` proposals.
 - No file edits outside the compression file.
