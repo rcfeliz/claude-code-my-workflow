@@ -1,0 +1,11 @@
+Package: msNome
+Title: [Título do Artigo]
+Version: 0.0.1
+Authors@R:
+    person("Ricardo Feliz", "Okamoto", email = "ric.feliz@gmail.com",
+           role = c("aut", "cre"))
+Description: [Descrição breve do artigo e dos dados.]
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.0.0
