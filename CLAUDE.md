@@ -1,21 +1,42 @@
-# CLAUDE.MD -- Academic Project Development with Claude Code
+# CLAUDE.MD -- Infraestrutura Acadêmica com Claude Code
 
-<!-- HOW TO USE: Replace [BRACKETED PLACEHOLDERS] with your project info.
-     Customize Beamer environments and CSS classes for your theme.
-     Keep this file under ~150 lines — Claude loads it every session.
-     See the guide at docs/workflow-guide.html for full documentation. -->
-
-**Project:** [YOUR PROJECT NAME]
-**Institution:** [YOUR INSTITUTION]
+**Usuário:** Ricardo Feliz Okamoto — Doutorando em Direito do Estado
+**Instituição:** FD USP — Faculdade de Direito da USP
 **Branch:** main
+
+---
+
+## O que é este repositório
+
+Este repositório é a **infraestrutura do Claude Code** — skills, agentes, regras, hooks e templates. Não é onde se escreve artigos; é onde se configura como o Claude ajuda a escrevê-los.
+
+### Fluxo de trabalho
+
+```
+my-claude (este repo)     →   infraestrutura, mantida e evoluída
+      ↓ ms-template/
+msImprobidade/            →   pacote R + .claude/ enxuto + CLAUDE.md do artigo
+msListagem/               →   pacote R + .claude/ enxuto + CLAUDE.md do artigo
+```
+
+### Convenção de nomenclatura
+
+Artigos seguem o padrão `msNome` — prefixo `ms` (manuscript) + nome do projeto. Tudo que não seguir esse padrão não é artigo.
+
+### Criar um novo artigo
+
+```bash
+~/documents/github/my-claude/scripts/new-manuscript.sh
+```
+
+O script pergunta nome, título e RQ — depois cria o pacote R, copia o `.claude/`, preenche os placeholders, inicializa git e cria o repositório privado no GitHub.
 
 ---
 
 ## Core Principles
 
 - **Plan first** -- enter plan mode before non-trivial tasks; save plans to `quality_reports/plans/`
-- **Verify after** -- compile/render and confirm output at the end of every task
-- **Single source of truth** -- Beamer `.tex` is authoritative; Quarto `.qmd` derives from it
+- **Verify after** -- render and confirm output at the end of every task
 - **Quality gates** -- nothing ships below 80/100
 - **[LEARN] tags** -- when corrected, save `[LEARN:category] wrong → right` to [MEMORY.md](MEMORY.md)
 
@@ -26,20 +47,17 @@ Cross-session context lives in [MEMORY.md](MEMORY.md); past plans, specs, and se
 ## Folder Structure
 
 ```
-[YOUR-PROJECT]/
-├── CLAUDE.MD                    # This file
+my-claude/
+├── CLAUDE.md                    # Este arquivo
 ├── .claude/                     # Rules, skills, agents, hooks
-├── Bibliography_base.bib        # Centralized bibliography
-├── Figures/                     # Figures and images
-├── Preambles/header.tex         # LaTeX headers
-├── Slides/                      # Beamer .tex files
-├── Quarto/                      # RevealJS .qmd files + theme
+├── ms-template/                 # Template para novos artigos (msNome)
+├── Quarto/                      # Slides ocasionais em RevealJS
 ├── docs/                        # GitHub Pages (auto-generated)
-├── scripts/                     # Utility scripts + R code
-├── quality_reports/             # Plans, session logs, merge reports, decision records
-├── explorations/                # Research sandbox (see rules)
-├── templates/                   # Session log, quality report templates
-└── master_supporting_docs/      # Papers and existing slides
+├── scripts/                     # Scripts utilitários
+├── quality_reports/             # Plans, session logs, merge reports
+├── explorations/                # Research sandbox
+├── templates/                   # Templates de sessão, spec, decisions
+└── master_supporting_docs/      # Papers e slides de apoio
 ```
 
 ---
@@ -47,26 +65,15 @@ Cross-session context lives in [MEMORY.md](MEMORY.md); past plans, specs, and se
 ## Commands
 
 ```bash
-# LaTeX (3-pass, XeLaTeX only)
-cd Slides && TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
-BIBINPUTS=..:$BIBINPUTS bibtex file
-TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
-TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
-
-# Deploy Quarto to GitHub Pages
-./scripts/sync_to_docs.sh LectureN
+# Deploy Quarto para GitHub Pages
+./scripts/sync_to_docs.sh arquivo
 
 # Quality score
 python scripts/quality_score.py Quarto/file.qmd
 
-# Palette sync (LaTeX ↔ SCSS)
-./scripts/check-palette-sync.sh
-
-# Surface-count sync (README ↔ CLAUDE.md ↔ guide ↔ landing page)
+# Surface-count sync (README ↔ CLAUDE.md ↔ guide)
 ./scripts/check-surface-sync.sh
 ```
-
-**Palette contract:** color names in `Preambles/header.tex` must match SCSS variables in `Quarto/theme-template.scss`. See [`Preambles/README.md`](Preambles/README.md).
 
 ---
 
@@ -84,73 +91,60 @@ Enforced by `/commit` (halts + asks for override); not enforced by a git pre-com
 
 ## Skills Quick Reference
 
+### Análise de dados e R
+
 | Command | What It Does |
 |---------|-------------|
-| `/compile-latex [file]` | 3-pass XeLaTeX + bibtex |
-| `/deploy [LectureN]` | Render Quarto + sync to docs/ |
-| `/extract-tikz [LectureN]` | TikZ → PDF → SVG |
-| `/new-diagram [snippet] [output.tex]` | Scaffold a TikZ diagram from the gallery with prevention + review |
-| `/proofread [file]` | Grammar/typo/overflow review |
-| `/visual-audit [file]` | Slide layout audit |
-| `/pedagogy-review [file]` | Narrative, notation, pacing review |
+| `/data-analysis [dataset]` | End-to-end R analysis pipeline |
 | `/review-r [file]` | R code quality review |
-| `/qa-quarto [LectureN]` | Adversarial Quarto vs Beamer QA |
-| `/slide-excellence [file]` | Combined multi-agent review |
-| `/translate-to-quarto [file]` | Beamer → Quarto translation |
-| `/validate-bib` | Cross-reference citations |
-| `/devils-advocate` | Challenge slide design |
-| `/create-lecture` | Full lecture creation |
-| `/commit [msg]` | Stage, commit, PR, merge |
+| `/r-package-check [pkg path]` | R package release gate: document + tests + R CMD check |
+| `/simulation-study [estimator+DGP]` | Reproducible Monte Carlo study |
+| `/audit-reproducibility [paper]` | Enforce replication tolerance thresholds on paper ↔ code |
+
+### Escrita acadêmica
+
+| Command | What It Does |
+|---------|-------------|
+| `/review-paper [file]` | Manuscript review (single-pass / `--adversarial` / `--peer <journal>`) |
+| `/respond-to-referees [report] [manuscript]` | R&R cross-reference + response draft |
+| `/seven-pass-review` | Seven-pass adversarial manuscript review (parallel forked subagents) |
+| `/verify-claims [file]` | Chain-of-Verification fact-check (forked verifier, fresh context) |
+| `/proofread [file]` | Grammar/typo review |
+| `/humanize [file]` | Detect AI-voice tells in academic prose |
 | `/lit-review [topic]` | Literature search + synthesis |
 | `/research-ideation [topic]` | Research questions + strategies |
 | `/interview-me [topic]` | Interactive research interview |
-| `/review-paper [file]` | Manuscript review (single-pass / `--adversarial` / `--peer <journal>` simulated pipeline) |
-| `/respond-to-referees [report] [manuscript]` | R&R cross-reference + response draft |
-| `/data-analysis [dataset]` | End-to-end R analysis |
-| `/audit-reproducibility [paper]` | Enforce replication tolerance thresholds on paper ↔ code |
-| `/learn [skill-name]` | Extract discovery into persistent skill |
+| `/preregister [--style osf|aspredicted|aea-rct]` | Draft a preregistration document |
+
+### Slides (uso ocasional)
+
+| Command | What It Does |
+|---------|-------------|
+| `/deploy [arquivo]` | Render Quarto + sync to docs/ |
+| `/qa-quarto [arquivo]` | Adversarial Quarto QA |
+| `/visual-audit [file]` | Slide layout audit |
+| `/pedagogy-review [file]` | Narrative, notation, pacing review |
+
+### Workflow e infraestrutura
+
+| Command | What It Does |
+|---------|-------------|
+| `/commit [msg]` | Stage, commit, PR, merge |
 | `/context-status` | Show session health + context usage |
-| `/deep-audit` | Repository-wide consistency audit |
+| `/checkpoint [topic]` | Save structured state snapshot before stopping or handing off |
+| `/compress-session [slug]` | Distil current session into structured notes before auto-compaction |
+| `/promote-memory [filter]` | Five-critic council that votes on which `[LEARN]` entries graduate to MEMORY.md |
 | `/permission-check` | Diagnose permission layers when prompts fire unexpectedly |
-| `/seven-pass-review` | Seven-pass adversarial manuscript review (parallel forked subagents) |
-| `/verify-claims [file]` | Chain-of-Verification fact-check (forked verifier, fresh context) |
-| `/checkpoint [topic]` | Save a structured state snapshot (active plan, decisions, file pointers, next actions) before stopping or handing off |
-| `/preregister [--style osf|aspredicted|aea-rct]` | Draft a preregistration document (OSF / AsPredicted / AEA RCT Registry) from a research spec |
-| `/humanize [file]` | Detect AI-voice tells in academic prose (read-only audit; no rewrite) |
-| `/prompt [text] [depth:light|standard|deep]` | Reformat informal input into a structured six-section prompt, then execute |
-| `/prompt-only [text] [depth] [--save path]` | Same formatting as `/prompt`, but emits the prompt as a reusable artifact (no execution) |
-| `/compress-session [slug]` | Distil current session into structured notes before auto-compaction (vs `/checkpoint` for natural stops) |
-| `/promote-memory [filter]` | Five-critic council that votes on which `[LEARN]` entries graduate from personal-memory.md to MEMORY.md |
-| `/stata-replication [paper-or-data]` | End-to-end Stata pipeline scaffold + execution via `stata-mcp` (mirrors `/data-analysis` for R) |
-| `/simulation-study [estimator+DGP]` | Reproducible Monte Carlo study: DGP, estimator grid, seeded reps, bias/RMSE/coverage/size/power + Monte Carlo SEs |
-| `/r-package-check [pkg path]` | R package release gate: `devtools::document()` + tests + `R CMD check --as-cran`, CRAN-policy triage, `r-package-reviewer` pass |
+| `/deep-audit` | Repository-wide consistency audit |
+| `/learn [skill-name]` | Extract discovery into persistent skill |
+| `/prompt [text] [depth:light|standard|deep]` | Reformat informal input into a structured prompt, then execute |
+| `/prompt-only [text] [depth] [--save path]` | Same as `/prompt`, but emits the prompt as a reusable artifact (no execution) |
 
 ---
-
-<!-- CUSTOMIZE: Replace placeholder rows ([your-env], [.your-class]) with your own.
-     Delete the rows marked "(example — delete)" once you've added yours. -->
-
-## Beamer Custom Environments
-
-| Environment | Effect | Use Case |
-| --- | --- | --- |
-| `[your-env]` | [Description] | [When to use] |
-| `keybox` | Gold background box | Key points *(example — delete)* |
-| `definitionbox[Title]` | Blue-bordered titled box | Formal definitions *(example — delete)* |
 
 ## Quarto CSS Classes
 
 | Class | Effect | Use Case |
 | --- | --- | --- |
-| `[.your-class]` | [Description] | [When to use] |
-| `.smaller` | 85% font | Dense content *(example — delete)* |
-| `.positive` | Green bold | Good annotations *(example — delete)* |
-
----
-
-## Current Project State
-
-| Lecture | Beamer | Quarto | Key Content |
-| --- | --- | --- | --- |
-| HelloWorld *(sample — delete when ready)* | `HelloWorld.tex` | `HelloWorld.qmd` | Minimal deck to verify setup |
-| 1: [Topic] | `Lecture01_Topic.tex` | `Lecture1_Topic.qmd` | [Brief description] |
+| `.smaller` | 85% font | Dense content |
+| `.positive` | Green bold | Good annotations |
